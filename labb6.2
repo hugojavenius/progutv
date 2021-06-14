@@ -1,0 +1,85 @@
+class mapVecing2<E extends Comparable<E>>  extends TreeMap<Integer, E> implements SparseVec<E>  {
+
+    @Override
+    public void add(E elem) {
+        int key = 0;
+        while (containsKey(key)) {
+            key++;
+        }
+        put(key, elem);
+    }
+
+    @Override
+    public void add(int pos, E elem) {
+        if (pos < 0) {pos=0;}
+        put(pos, elem);
+    }
+
+    @Override
+    public int indexOf(E elem) {
+        for (Map.Entry<Integer, E> e : entrySet()) {
+            if (e.getValue() == elem) {return e.getKey();}
+        }
+        return -1;
+    }
+
+    @Override
+    public void removeAt(int pos) {
+        remove(pos);
+    }
+
+    @Override
+    public void removeElem(E elem) {
+        remove(indexOf(elem));
+    }
+
+    @Override
+    public int size() {
+        return super.size();
+    }
+
+    @Override
+    public int minIndex() {
+        if (super.isEmpty()) {return 0;}
+        return super.firstKey();
+    }
+
+    @Override
+    public int maxIndex() {
+        if (super.isEmpty()) {return 0;}
+        return super.lastKey();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Map.Entry<Integer, E> e : entrySet()) {
+            s.append(String.format("%s %s\n", e.getKey(), e.getValue()));
+        }
+        return s.toString();
+    }
+
+    @Override
+    public E get(int pos) {
+        return super.get(pos);
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] a = new Object[maxIndex()+1];
+        for (Map.Entry<Integer, E> e : entrySet()) {
+            a[e.getKey()] = e.getValue();
+        }
+        return a;
+    }
+
+    @Override
+    public List<E> sortedValues() {
+        List<E> a = new ArrayList<>();
+        for (Map.Entry<Integer, E> e : entrySet()) {
+            a.add(e.getValue());
+        }
+        Collections.sort(a);
+        return a;
+    }
+}
